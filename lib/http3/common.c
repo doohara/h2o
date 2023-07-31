@@ -1382,6 +1382,6 @@ uint64_t h2o_http3_decode_h3_datagram(h2o_iovec_t *payload, const void *_src, si
         *payload = h2o_iovec_init(src, end - src);
     }
     // convert from quarter stream id
-    flow_id = flow_id << 2;        
+    flow_id = flow_id << 2;
     return flow_id;
 }
