@@ -965,6 +965,9 @@ static int on_req(h2o_handler_t *_handler, h2o_req_t *req)
             token = h2o_next_token(&iter, '/', '/', &token_len, NULL);
             if (token) {
                 host = h2o_iovec_init(token, token_len);
+                // RFC 9298 Section 3: if "target_host" contains an IPv6
+                // literal, the colons (":") MUST be percent-encoded.
+                host = h2o_percent_decode(&req->pool, host);
                 token = h2o_next_token(&iter, '/', '/', &token_len, NULL);
                 if (token) {
                     if ((p = h2o_strtosize(token, token_len)) < 65535)
